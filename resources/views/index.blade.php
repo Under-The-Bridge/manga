@@ -1,120 +1,51 @@
-@extends("template")
-
-@section("content")
-    <div class="banner">
-        <div class="banner-poster"></div>
-        <div class="banner-data">
-            <a class="banner-title" href="">Стальной алхимик | 2001</a>
-            <p class="banner-desc">В алхимическом ритуале пошло что-то не так: Эдвард Элрик потерял руку и ногу, а от его
-                брата Альфонса осталась только душа, которую Эдвард смог прикрепить к доспехам. Заменив утраченные
-                конечности механическим «авто-протезом», Эдвард Элрик становится государственным алхимиком по имени
-                «Стальной», чтобы отыскать одну вещь, которая может восстановить тело его брата – легендарный философский
-                камень.</p>
-            <p class="banner-genres">
-                <a class="banner-genre" href="">Боевик</a>
-                <a class="banner-genre" href="">Драма</a>
-                <a class="banner-genre" href="">Комедия</a>
-                <a class="banner-genre" href="">Научная фантастика</a>
-            </p>
-            <a class="banner-read" href="">Читать</a>
-        </div>
-    </div>
-    <div class="manga-group mt-3">
-        <div class="manga-group-top">
-            <a class="manga-group-link" href>Популярное →</a>
-            <div>
-                <button class="move-arrow arrow-left">←</button>
-                <button class="move-arrow arrow-right">→</button>
+@extends('template')
+@section('page-class', 'home-page container')
+@section('content')
+    @if(request()->filled('q') || request()->filled('genre'))
+        <section class="search-results" aria-labelledby="results-heading">
+            <div class="section-heading"><h1 id="results-heading">{{ request()->filled('q') ? 'Результаты поиска' : request('genre') }}</h1><a class="accent-link" href="{{ route('home') }}">Сбросить</a></div>
+            <div class="search-grid">
+                @forelse($filtered as $slug => $item)
+                    @include('partials.manga-card')
+                @empty
+                    <p class="muted">Манга не найдена. Попробуйте другое название.</p>
+                @endforelse
             </div>
-        </div>
-        <div class="manga-group-list">
-            <div class="overflow">
-                <div class="manga-panel">
-                    <img src="images/sbr.png" alt="">
-                    <a href="">Невероятные Приключения ДжоДжо — Часть 7: Стил-Болл-Ран (В цвете)</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/hellsing.png" alt="">
-                    <a href="">Хеллсинг</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/madeinabyss.png" alt="">
-                    <a href="">Созданный в бездне</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/sbr.png" alt="">
-                    <a href="">Невероятные Приключения ДжоДжо — Часть 7: Стил-Болл-Ран (В цвете)</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/hellsing.png" alt="">
-                    <a href="">Хеллсинг</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/madeinabyss.png" alt="">
-                    <a href="">Созданный в бездне</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/sbr.png" alt="">
-                    <a href="">Невероятные Приключения ДжоДжо — Часть 7: Стил-Болл-Ран (В цвете)</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/hellsing.png" alt="">
-                    <a href="">Хеллсинг</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/madeinabyss.png" alt="">
-                    <a href="">Созданный в бездне</a>
-                </div>
+        </section>
+    @else
+        <section class="hero" aria-labelledby="hero-title">
+            <img class="hero-cover" src="{{ asset('images/fullmetal.png') }}" width="256" height="355" alt="Обложка манги Стальной алхимик">
+            <div class="hero-data">
+                <h1 id="hero-title"><a href="{{ route('manga.show', 'fullmetal-alchemist') }}">Стальной алхимик <span class="hero-divider">|</span> <span class="hero-year">2001</span></a></h1>
+                <p class="hero-description">{{ config('webmanga.description') }}</p>
+                <div class="hero-genres">@foreach(['Боевик', 'Драма', 'Комедия', 'Научная фантастика'] as $genre)<a class="tag" href="{{ route('home', ['genre' => $genre]) }}">{{ $genre }}</a>@endforeach</div>
+                <a class="hero-read button" href="{{ route('manga.show', 'fullmetal-alchemist') }}">Читать</a>
             </div>
-        </div>
-    </div>
-    <div class="manga-group mt-3">
-        <div class="manga-group-top">
-            <a class="manga-group-link" href>Новинки →</a>
-            <div>
-                <button class="move-arrow arrow-left">←</button>
-                <button class="move-arrow arrow-right">→</button>
+        </section>
+        @include('partials.manga-rail', ['id' => 'popular', 'heading' => 'Популярное'])
+        @include('partials.manga-rail', ['id' => 'new', 'heading' => 'Новинки'])
+        <section class="recent-section" id="chapters" aria-labelledby="recent-heading">
+            <div class="section-heading"><h2 id="recent-heading">Новые главы</h2><a class="accent-link" href="{{ route('home') }}#popular">Все →</a></div>
+            <div class="three-column">
+                @foreach(array_slice($titles, 0, 3, true) as $slug => $item)
+                    <a class="chapter-card" href="{{ route('manga.show', $slug) }}"><img src="{{ asset('images/'.$item['cover']) }}" alt="{{ $item['short'] }}" width="60" height="83" loading="lazy"><div><h3>{{ $item['short'] }}</h3><span class="accent-link">Новая глава →</span><p class="muted">Обновлено сегодня</p></div></a>
+                @endforeach
             </div>
-        </div>
-        <div class="manga-group-list">
-            <div class="overflow">
-                <div class="manga-panel">
-                    <img src="images/sbr.png" alt="">
-                    <a href="">Невероятные Приключения ДжоДжо — Часть 7: Стил-Болл-Ран (В цвете)</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/hellsing.png" alt="">
-                    <a href="">Хеллсинг</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/madeinabyss.png" alt="">
-                    <a href="">Созданный в бездне</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/sbr.png" alt="">
-                    <a href="">Невероятные Приключения ДжоДжо — Часть 7: Стил-Болл-Ран (В цвете)</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/hellsing.png" alt="">
-                    <a href="">Хеллсинг</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/madeinabyss.png" alt="">
-                    <a href="">Созданный в бездне</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/sbr.png" alt="">
-                    <a href="">Невероятные Приключения ДжоДжо — Часть 7: Стил-Болл-Ран (В цвете)</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/hellsing.png" alt="">
-                    <a href="">Хеллсинг</a>
-                </div>
-                <div class="manga-panel">
-                    <img src="images/madeinabyss.png" alt="">
-                    <a href="">Созданный в бездне</a>
-                </div>
+        </section>
+        <section class="genre-section" id="genres" aria-labelledby="genre-heading">
+            <div class="section-heading"><div><h2 id="genre-heading">Найди мангу по настроению</h2><p class="section-subtitle">Выбери жанр и попробуй что-то новое</p></div><a class="accent-link" href="#genres">Все жанры →</a></div>
+            <div class="genre-grid">@foreach(['Боевик', 'Приключения', 'Фэнтези', 'Комедия', 'Романтика', 'Ужасы'] as $genre)<a href="{{ route('home', ['genre' => $genre]) }}">{{ $genre }}</a>@endforeach</div>
+        </section>
+        <section class="collection-section" id="collections" aria-labelledby="collection-heading">
+            <div class="section-heading"><div><h2 id="collection-heading">Коллекции сообщества</h2><p class="section-subtitle">Подборки от читателей</p></div><a class="accent-link" href="#collections">Все коллекции →</a></div>
+            <div class="three-column">
+                @foreach([['Каждый должен прочитать', 'ramz', 12], ['Лучшие манги по моему мнению', 'pixies', 8], ['Манга с красивой рисовкой', 'mangalover', 16]] as $collection)
+                    <a class="collection-card" href="{{ route('home') }}#popular">
+                        <div class="collection-covers">@for($i = 0; $i < 3; $i++)@php($cover = array_values($titles)[($i + $loop->index) % 3])<img src="{{ asset('images/'.$cover['cover']) }}" width="106" height="128" alt="{{ $cover['short'] }}" loading="lazy">@endfor</div>
+                        <h3>{{ $collection[0] }}</h3><div class="collection-meta"><span class="accent-link">от {{ '@'.$collection[1] }}</span><span>{{ $collection[2] }} тайтлов</span></div>
+                    </a>
+                @endforeach
             </div>
-        </div>
-    </div>
+        </section>
+    @endif
 @endsection

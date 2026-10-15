@@ -1,20 +1,19 @@
-<nav class="navbar navbar-expand-lg">
-    <div class="container-fluid container">
-        <a class="navbar-brand" href="#">WebManga</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Каталог</a>
-                </li>
-            </ul>
-            <div class="nav-2">
-                <input class="search-input" type="search" placeholder="Поиск" aria-label="Search" />
-                <a class="auth-btn">Вход|Регистрация</a>
-            </div>
+<header class="site-header">
+    <nav class="container header-content" aria-label="Основная навигация">
+        <div class="header-start">
+            <a class="brand" href="{{ route('home') }}" aria-label="WebManga — главная">WebManga</a>
+            <a class="catalog-link" href="{{ route('home') }}#popular">Каталог</a>
         </div>
-    </div>
-</nav>
+        <div class="header-end">
+            <form class="search-form" action="{{ route('home') }}" role="search">
+                <label class="sr-only" for="site-search">Поиск манги</label>
+                <input id="site-search" name="q" type="search" placeholder="Поиск" value="{{ request('q') }}" maxlength="100">
+            </form>
+            @auth
+                <form action="{{ route('logout') }}" method="POST">@csrf<button class="auth-btn" type="submit">Выйти</button></form>
+            @else
+                <div class="auth-btn"><a href="{{ route('login') }}">Вход</a><span aria-hidden="true">|</span><a href="{{ route('register') }}">Регистрация</a></div>
+            @endauth
+        </div>
+    </nav>
+</header>
