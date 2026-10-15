@@ -1,0 +1,1 @@
+<div class="stat-row"><span>{{ $label }}</span><meter min="0" max="100" value="{{ $percentage }}" aria-label="{{ $label }}: {{ $percentage }}%">{{ $percentage }}%</meter><span>{{ $percentage }}%</span><span class="muted">{{ $count }}</span></div>
