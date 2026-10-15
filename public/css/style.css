@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    color: white;
+    font-family: 'Inter' !important;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #0D0D0D !important;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+p {
+    margin: 0 !important;
+}
+
+.navbar-brand {
+    font-family: "Caveat" !important;
+    color: #41f0b3 !important;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+
+
+.navbar {
+    height: 60px;
+    background-color: #1A1A1A !important;
+}
+
+.navbar a {
+    color: white;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1120px !important;
+    padding: 0 !important;
+}
+
+.auth-btn {
+    width: 175px;
+    height: 40px;
+    background-color: #1AB57F;
+    display: grid;
+    place-content: center;
+    border-radius: 10px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.search-input {
+    background-color: #252525;
+    width: 350px;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    padding: 0px 10px;
+    font-size: 16px;
+}
+
+.search-input::placeholder {
+    color: #5E5E5E;
+}
+
+.navbar>.container {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-2 {
+    display: flex;
+    width: 567px;
+    justify-content: space-between;
+}
+
+.banner {
+    height: 375px;
+    background: linear-gradient(to left,
+            rgba(0, 0, 0, 0.60) 0%,
+            rgba(0, 0, 0, 0.85) 50%), url('/images/fullmetal-banner.png');
+    background-size: cover;
+    border-radius: 15px;
+    padding: 10px 35px 10px 10px;
+    display: flex;
+    gap: 35px;
+}
+
+.banner-poster {
+    background-color: #0D0D0D;
+    width: 256px;
+    height: 355px;
+    background: url('/images/fullmetal.png');
+    border-radius: 10px;
+}
+
+.banner-data {
+    width: 784px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 25px 0;
+}
+
+.banner-title {
+    font-size: 36px;
+    font-weight: bolder;
+}
+
+.banner-desc {
+    font-size: 14px;
+    font-weight: bolder;
+    line-height: normal;
+}
+
+.banner-genres {
+    display: flex;
+    gap: 10px;
+}
+
+.banner-read {
+    width: 125px;
+    height: 35px;
+    font-size: 22px;
+    display: grid;
+    place-content: center;
+    border-radius: 10px;
+    background-color: #1AB57F;
+    font-weight: bold;
+}
+
+.banner-genre {
+    width: auto;
+    height: 25px;
+    padding: 5px 10px;
+    background-color: #252525;
+    font-size: 12px;
+    border-radius: 5px;
+    display: grid;
+    place-content: center;
+}
+
+main.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-group-list {
+    border-radius: 10px;
+    height: 300px;
+    background-color: #1A1A1A;
+    padding: 10px;
+    display: flex;
+    gap: 15px;
+    overflow: hidden;
+    align-content: center;
+}
+
+.overflow{
+    display: flex;
+    gap: 15px;
+    align-content: center;
+    transform: translateX(0px);
+    transition: 0.3s;
+}
+
+.manga-panel {
+    width: 160px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-panel a {
+    height: 50px;
+    font-size: 15px;
+    letter-spacing: -5%;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 100%;
+    padding: 5px;
+}
+
+.manga-group-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 24px;
+    font-weight: 900;
+    height: 45px;
+}
+
+button.move-arrow{
+    background: none;
+    border: none;
+}
+
+
+footer{
+    height: 30px;
+    background-color: #121212;
+    display: flex;
+    align-items: center;
+}
+
+footer div{
+    font-size: 12px;
+    color: #5e5e5e;
+}
